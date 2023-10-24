@@ -4,6 +4,7 @@ import {Button, TableCell, TableRow} from "@mui/material";
 import {useAppDispatch} from "../../hooks";
 import {tableActions} from "../../redux/slices/tableSlice";
 import "./ItemComponent.css"
+import {useLocation} from "react-router-dom";
 
 interface ItemProps {
     item: ITable;
@@ -13,6 +14,9 @@ const ItemComponent: React.FC<ItemProps> = ({item}) => {
     const [editingRowId, setEditingRowId] = useState<number | null>(null);
     const [editedData, setEditedData] = useState<ITable | null>(null);
     const dispatch = useAppDispatch();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = +queryParams.get('page')!!;
 
     const startEditing = (id: number, data: ITable) => {
         setEditingRowId(id);
@@ -25,10 +29,15 @@ const ItemComponent: React.FC<ItemProps> = ({item}) => {
     };
 
     const saveEditedData = () => {
-        if (editedData) {
-            dispatch(tableActions.updateById({id: item.id, newDate: editedData}))
+        if (editedData && editedData.birthday_date) {
+            const dateParts = editedData.birthday_date.split('-');
+            const newFormattedDate = `20${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+            editedData.birthday_date = newFormattedDate;
+            dispatch(tableActions.updateById({ id: item.id, newDate: editedData, page }));
         }
     };
+
+
 
     return (
         <TableRow key={item.id}>

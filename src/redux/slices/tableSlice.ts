@@ -10,7 +10,6 @@ interface IState {
     next: string | null;
     previous: string | null;
     totalItems: number;
-    currentPage: number;
     totalPages: number;
 }
 
@@ -21,7 +20,6 @@ const initialState: IState = {
     next: null,
     previous: null,
     totalItems: 0,
-    currentPage: 1,
     totalPages: 0,
 };
 
@@ -45,7 +43,7 @@ const loadNextPage = createAsyncThunk<ITableData, number>(
     "tableSlice/loadNextPage",
     async (page, { rejectWithValue }) => {
         try {
-            const { data } = await tableServices.loadPage(page * 10);
+            const { data } = await tableServices.loadPage((page-1) * 10);
             return data;
         } catch (e) {
             const err = e as AxiosError;
@@ -57,18 +55,19 @@ const loadNextPage = createAsyncThunk<ITableData, number>(
 
 const updateById = createAsyncThunk(
     'tableSlice/updateCar',
-    async ({id,newDate}: IUpdateTable,  thunkAPI) => {
+    async ({ id, newDate, page }: IUpdateTable, thunkAPI) => {
         try {
-            const data = await tableServices.updateById(id, newDate);
-            thunkAPI.dispatch(getAll())
-            return data
+            await tableServices.updateById(id, newDate);
+            thunkAPI.dispatch(tableActions.loadNextPage(page);
+
         } catch (e) {
             const err = e as AxiosError;
             return thunkAPI.rejectWithValue(err.response?.data);
         }
-
     }
 );
+
+
 
 
 const tableSlice = createSlice({
@@ -77,9 +76,6 @@ const tableSlice = createSlice({
     reducers: {
         setQueryIsLoggedIn: (state, action) => {
             state.isLoggedIn = action.payload
-        },
-        setCurrentPage: (state, action) => {
-            state.currentPage = action.payload
         },
     },
     extraReducers: builder =>
@@ -105,7 +101,7 @@ const tableSlice = createSlice({
 });
 
 const { reducer: tableReducer,
-    actions: { setQueryIsLoggedIn,setCurrentPage } } = tableSlice
+    actions: { setQueryIsLoggedIn } } = tableSlice
 
 
 const tableActions = {
@@ -113,7 +109,7 @@ const tableActions = {
     loadNextPage,
     setQueryIsLoggedIn,
     updateById,
-    setCurrentPage
+
 }
 
 export {
