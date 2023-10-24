@@ -1,0 +1,14 @@
+.buttonBox {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+}
+.button {
+        width: 50px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+}
+
+.button:hover {
+    transform: scale(1.05);
+}

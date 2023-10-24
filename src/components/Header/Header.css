@@ -1,0 +1,14 @@
+.Header{
+    height: 50px;
+    display: flex;
+    justify-content: right;
+    padding-right: 15px;
+    align-items: center;
+    background-color: #3d3db2;
+}
+
+a{
+    text-decoration: none;
+    color: snow;
+    margin: 10px;
+}
