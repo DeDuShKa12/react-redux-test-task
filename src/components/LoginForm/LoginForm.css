@@ -13,9 +13,11 @@
 }
 
 .Button {
-    width: 180px;
+    width: 60%;
+    height: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s;
+    background: #9e9ef3;
 }
 .Button:hover {
     transform: scale(1.05);

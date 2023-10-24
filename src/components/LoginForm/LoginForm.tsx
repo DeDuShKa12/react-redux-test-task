@@ -6,8 +6,7 @@ import { loginValidator } from '../../validators/Validators';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import "./LoginForm.css"
+import "./LoginForm.css";
 
 const LoginForm: FC = () => {
     const [error, setError] = useState<string | null>(null);
@@ -16,7 +15,6 @@ const LoginForm: FC = () => {
 
     const {
         register,
-        handleSubmit,
         formState: { errors, isValid },
     } = useForm({
         mode: 'all',
@@ -40,13 +38,12 @@ const LoginForm: FC = () => {
 
     return (
         <div>
-            <form className="Form" onSubmit={handleSubmit(login)}>
+            <form className="Form">
                 <TextField
                     label="Username"
                     variant="outlined"
                     {...register('username')}
                     fullWidth
-
                 />
                 {errors.username && (<span>{errors.username?.message as string}</span>)}
                 <TextField
@@ -58,14 +55,12 @@ const LoginForm: FC = () => {
                 />
                 {errors.password && (<span>{errors.password?.message as string}</span>)}
                 {error && <div className="error">{error}</div>}
-                <Button className="Button" variant="contained" color="primary" disabled={!isValid} fullWidth>
+                <button onClick={login} className="Button" disabled={!isValid}>
                     Login
-                </Button>
+                </button>
             </form>
         </div>
     );
 };
 
 export { LoginForm };
-
-
