@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import { Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { tableActions } from '../../redux/slices/tableSlice';
 import {useSearchParams} from "react-router-dom";
 
-const PaginationComponent: React.FC = () => {
+const PaginationComponent: FC = () => {
     const dispatch = useAppDispatch();
     const { next, previous,totalPages } = useAppSelector((state) => state.tableReducer);
     const [query, setQuery] = useSearchParams();

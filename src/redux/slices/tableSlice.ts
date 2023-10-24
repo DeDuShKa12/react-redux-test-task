@@ -58,8 +58,7 @@ const updateById = createAsyncThunk(
     async ({ id, newDate, page }: IUpdateTable, thunkAPI) => {
         try {
             await tableServices.updateById(id, newDate);
-            thunkAPI.dispatch(tableActions.loadNextPage(page);
-
+            thunkAPI.dispatch(tableActions.loadNextPage(page));
         } catch (e) {
             const err = e as AxiosError;
             return thunkAPI.rejectWithValue(err.response?.data);
