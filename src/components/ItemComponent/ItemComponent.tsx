@@ -29,14 +29,15 @@ const ItemComponent: React.FC<ItemProps> = ({item}) => {
     };
 
     const saveEditedData = () => {
-        if (editedData && editedData.birthday_date) {
+        if (editedData && editedData?.birthday_date) {
             const dateParts = editedData.birthday_date.split('-');
             const newFormattedDate = `20${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
             editedData.birthday_date = newFormattedDate;
             dispatch(tableActions.updateById({ id: item.id, newDate: editedData, page }));
-            cancelEditing()
+            cancelEditing();
         }
     };
+
 
 
 
