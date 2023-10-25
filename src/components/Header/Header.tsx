@@ -24,7 +24,7 @@ const Header: FC = () => {
                 <NavLink to={'table'}>Table</NavLink>
             </div>
             <div>
-                {isLoggedIn ? <NavLink to={'/login'} onClick={logOut}>LogOut</NavLink> : <NavLink to={'/login'}>LogIn</NavLink>}
+                <NavLink to={'/login'} onClick={logOut}>{isLoggedIn ? "LogOut": "logIn"}</NavLink>
             </div>
         </div>
     );
