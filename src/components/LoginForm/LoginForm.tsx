@@ -7,7 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import TextField from '@mui/material/TextField';
 import "./LoginForm.css";
+import { loginUser } from "../../services";
 
+type FormValues = {
+    username: string;
+    password: string;
+};
 const LoginForm: FC = () => {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -15,15 +20,16 @@ const LoginForm: FC = () => {
 
     const {
         register,
+        handleSubmit,
         formState: { errors, isValid },
-    } = useForm({
+    } = useForm<FormValues>({
         mode: 'all',
         resolver: joiResolver(loginValidator),
     });
 
-    const login = async (formData: any) => {
+    const onSubmit = async (formData: FormValues)  => {
         try {
-            await login(formData);
+            await loginUser(formData.username, formData.password);
             dispatch(tableActions.setQueryIsLoggedIn(true));
             localStorage.setItem('isLoggedIn', 'true');
             navigate('/table');
@@ -38,7 +44,7 @@ const LoginForm: FC = () => {
 
     return (
         <div>
-            <form className="Form">
+            <form onSubmit={handleSubmit(onSubmit)} className="Form">
                 <TextField
                     label="Username"
                     variant="outlined"
@@ -55,7 +61,7 @@ const LoginForm: FC = () => {
                 />
                 {errors.password && (<span>{errors.password?.message as string}</span>)}
                 {error && <div className="error">{error}</div>}
-                <button onClick={login} className="Button" disabled={!isValid}>
+                <button type="submit" className="Button" disabled={!isValid}>
                     Login
                 </button>
             </form>

@@ -3,7 +3,7 @@ import {baseURL, urls} from "../configs";
 
 const axiosService = axios.create({ baseURL });
 
-export const login = async (username: string, password: string) => {
+export const loginUser = async (username: string, password: string) => {
     try {
         const response = await axiosService.post(urls.login, { username, password });
 
