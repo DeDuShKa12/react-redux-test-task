@@ -21,9 +21,6 @@ const Header: FC = () => {
     return (
         <div className="Header">
             <div>
-                <NavLink to={'table'}>Table</NavLink>
-            </div>
-            <div>
                 <NavLink to={'/login'} onClick={logOut}>{isLoggedIn ? "LogOut": "logIn"}</NavLink>
             </div>
         </div>

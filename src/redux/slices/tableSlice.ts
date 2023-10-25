@@ -109,6 +109,7 @@ const tableActions = {
     setQueryIsLoggedIn,
     updateById,
 
+
 }
 
 export {
