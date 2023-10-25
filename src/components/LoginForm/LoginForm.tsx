@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { tableActions } from '../../redux/slices/tableSlice';
 import { loginValidator } from '../../validators/Validators';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import TextField from '@mui/material/TextField';
 import "./LoginForm.css";
@@ -32,7 +32,7 @@ const LoginForm: FC = () => {
             await loginUser(formData.username, formData.password);
             dispatch(tableActions.setQueryIsLoggedIn(true));
             localStorage.setItem('isLoggedIn', 'true');
-            navigate('/table');
+            navigate('/table?page=1');
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 setError('Невірний логін або пароль');

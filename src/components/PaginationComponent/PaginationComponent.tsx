@@ -1,12 +1,12 @@
-import React, {FC, useEffect} from 'react';
+import React, { FC, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { tableActions } from '../../redux/slices/tableSlice';
-import {useSearchParams} from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
 
 const PaginationComponent: FC = () => {
     const dispatch = useAppDispatch();
-    const { next, previous,totalPages } = useAppSelector((state) => state.tableReducer);
+    const { next, previous, totalPages } = useAppSelector((state) => state.tableReducer);
     const [query, setQuery] = useSearchParams();
 
     const handlePageChange = (newPage: number) => {
@@ -22,15 +22,15 @@ const PaginationComponent: FC = () => {
         }
     }, [dispatch, query]);
 
-
+    const currentPage = +query.get('page')!!;
 
     return (
         <div className="pagination">
             <Button
                 variant="contained"
                 color="primary"
-                onClick={() => handlePageChange(+query.get('page')!! - 1)}
-                disabled={!previous}
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={!previous || currentPage === 1}
             >
                 {'<'}
             </Button>
@@ -39,18 +39,18 @@ const PaginationComponent: FC = () => {
                 <Button
                     key={i}
                     variant="contained"
-                    color={i === +query.get('page')!! ? 'primary' : undefined}
-                    onClick={() => handlePageChange(i+1)}
-                    disabled={i+1 === +query.get('page')!!}
+                    color={i === currentPage - 1 ? 'primary' : undefined}
+                    onClick={() => handlePageChange(i + 1)}
+                    disabled={i + 1 === currentPage}
                 >
-                    {i+1}
+                    {i + 1}
                 </Button>
             ))}
 
             <Button
                 variant="contained"
                 color="primary"
-                onClick={() => handlePageChange(+query.get('page')!! + 1)}
+                onClick={() => handlePageChange(currentPage + 1)}
                 disabled={!next}
             >
                 {'>'}
